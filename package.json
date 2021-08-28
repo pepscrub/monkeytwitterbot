@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.1.1",
+    "node-fetch": "^2.6.1",
+    "twit": "^2.2.11",
+    "twitter-lite": "^1.1.0",
+    "twitter-v2": "^1.1.0",
+    "uninstall": "^0.0.0"
+  }
+}
