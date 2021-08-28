@@ -19,8 +19,6 @@ async function test()
     const url = await monkey();
     if(!url || !url['url']) return test();
 
-    console.log(url['url'])
-
     const b64 = await fetch(url['url'])
     .then(res=>res.buffer())
     .then((buffer)=>buffer.toString('base64'))
@@ -39,7 +37,6 @@ async function test()
             T.post(`statuses/update`, params, (err,data,res)=>
             {
                 if(err) throw err;
-                console.log('Tweeted image')
             })
 
         })
@@ -49,6 +46,8 @@ async function test()
 
 
 }
+
+console.log("Running")
 
 let prevHour = new Date().getHours()-1;
 
