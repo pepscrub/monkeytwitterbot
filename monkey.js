@@ -24,7 +24,6 @@ const getrandom = (data) =>
     const rm = Math.floor(Math.random()*data.length);
     const rp = data[rm]['data'];
 
-    if(rp['media'] === null) return getrandom(data);
     if(/v\.redd\.\it/.test(rp??['url'])) return getrandom(data);
     return rp;
 }
@@ -51,13 +50,16 @@ async function fetchreddit()
     })
     .then(res=>{
         if(res === parseInt(res, 10) || res['data'] === undefined) return monkey();
-        const valid = res['data']['children'].filter(post=>!post.data.over_18);
+        const url = res['data']['children'].filter(post=>!post.data.over_18);
+        const valid = url.filter(data=>/jpg|jpeg|png|gif/gmi.test(data['data'].url));
         const rp = getrandom(valid);
         const media = 
         rp['media'] === null ?  rp['url'] : 
         rp['media']['fallback_url'] ? null : 
         (rp['media']['type'] != undefined ? rp['media']['oembed']['thumbnail_url'] : null);
-        const formatted = {'url': media}    
+        const formatted = {'url': media};
+
+        console.log(formatted)
         return formatted
     })
     .catch(e=>{throw e});
@@ -129,7 +131,8 @@ async function fetchgoogle()
 
 async function monkey()
 {
-    const random = (Math.floor(Math.random() * 3) + 1) - 1;
+    const random = (Math.floor(Math.random() * 5) + 1) - 1;
+
     switch(random)
     {
         case 0:
@@ -138,6 +141,8 @@ async function monkey()
             return fetchgoogle();
         case 2:
             return fetchDB();
+        default: 
+            return fetchreddit();
     }
 }
 

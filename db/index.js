@@ -91,7 +91,7 @@ module.exports.DataBase = class DataBase
         }
         catch(e)
         {
-            log(`${`ERROR`.bold.red} ${`${e.message}`.red}`);
+            console.log(`${e.message}`);
         }
     }
 

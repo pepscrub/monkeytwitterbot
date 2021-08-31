@@ -14,10 +14,10 @@ const T = new Twit({
     strictSSL: true
 })
 
-async function test()
+async function getmonkey()
 {
     const url = await monkey();
-    if(!url || !url['url']) return test();
+    if(!url || !url['url']) return getmonkey();
 
     const b64 = await fetch(url['url'])
     .then(res=>res.buffer())
@@ -38,15 +38,11 @@ async function test()
             {
                 if(err) throw err;
             })
-
         })
-
-
     })
 
 
 }
-
 console.log("Running")
 
 let prevHour = new Date().getHours()-1;
@@ -57,6 +53,6 @@ setInterval(()=>
     if(prevHour != hour)
     {
         prevHour = hour;
-        test();        
+        getmonkey();        
     }
 }, timer)
