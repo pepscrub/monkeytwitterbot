@@ -37,7 +37,7 @@ async function fetchDB()
     const ranInt = Math.round(Math.random() * count) + 1;
     const ranmonk = array[ranInt];
 
-    return {'url': ranmonk['url']}
+    return {title: 'monke', 'url': ranmonk['url']}
 }
 
 async function fetchreddit()
@@ -57,9 +57,7 @@ async function fetchreddit()
         rp['media'] === null ?  rp['url'] : 
         rp['media']['fallback_url'] ? null : 
         (rp['media']['type'] != undefined ? rp['media']['oembed']['thumbnail_url'] : null);
-        const formatted = {'url': media};
-
-        console.log(formatted)
+        const formatted = {title: rp['title'], url: media};
         return formatted
     })
     .catch(e=>{throw e});
@@ -118,7 +116,7 @@ async function fetchgoogle()
             }
             res['items'].map((v,i)=>
             {
-                google_results.push({url: v['link']});
+                google_results.push({title: v['title'], url: v['link']});
             })
             return handleGoogleResults(google_results);
         })

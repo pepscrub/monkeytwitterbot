@@ -18,7 +18,6 @@ async function getmonkey()
 {
     const url = await monkey();
     if(!url || !url['url']) return getmonkey();
-
     const b64 = await fetch(url['url'])
     .then(res=>res.buffer())
     .then((buffer)=>buffer.toString('base64'))
@@ -26,13 +25,13 @@ async function getmonkey()
     T.post('media/upload', { media_data: b64 }, (err, data, res)=>
     {
         const mediaID = data.media_id_string;
-        const altText = `Image of monkey; sorry im too lazy to program the alt text`;
+        const altText = url['title'];
         const meta_params = {media_id: mediaID, altText: {text:altText}};
 
         T.post('media/metadata/create', meta_params, (err, data, res)=>
         {
             if(err) throw err;
-            const params = {status: ``, media_ids: [mediaID]};
+            const params = {status: url['title'], media_ids: [mediaID]};
             
             T.post(`statuses/update`, params, (err,data,res)=>
             {
